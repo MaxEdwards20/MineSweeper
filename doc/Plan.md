@@ -52,3 +52,5 @@ public cell
 * onSingleTap and onLongPress testing in logger
     * longPress works
     * onSingleTapUp is not functioning; no pickup from the screen
+    * Rebuilt the program and both working properly now
+    
