@@ -53,4 +53,8 @@ public cell
     * longPress works
     * onSingleTapUp is not functioning; no pickup from the screen
     * Rebuilt the program and both working properly now
-    
+
+# Questions:
+* Line 84 of `Game.java`. Is this the correct way to be thinking about separating these characters?
+* Line 130 of `Game.java`, how do I change paint color to be from the resources file?
+

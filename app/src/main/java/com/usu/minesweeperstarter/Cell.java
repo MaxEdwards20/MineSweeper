@@ -63,14 +63,25 @@ public class Cell {
     }
 
     public void draw(Canvas canvas, Paint paint) {
-        if (type == Type.NUMBER && numNeighbors < 2){paint.setColor(Color.GREEN);} // 1 Neighbor
-        else if (type == Type.NUMBER && numNeighbors < 3 ){paint.setColor(Color.MAGENTA);} // 2 neighbors
-        else if (type == Type.NUMBER ){paint.setColor(Color.BLUE);} // 3 neighbors
-        else if (type == Type.MINE){paint.setColor(Color.BLACK);} // Mine
-        else {paint.setColor(Color.WHITE);} // Default
+
 
         if (isMarked) {paint.setColor(Color.RED);} // Marked
+        if (isSelected){
+            if (type == Type.NUMBER && numNeighbors < 2){paint.setColor(Color.GREEN);} // 1 Neighbor
+            else if (type == Type.NUMBER && numNeighbors < 3 ){paint.setColor(Color.MAGENTA);} // 2 neighbors
+            else if (type == Type.NUMBER ){paint.setColor(Color.BLUE);} // 3 neighbors
+            else if (type == Type.MINE){paint.setColor(Color.BLACK);} // Mine
+        }
+        else {paint.setColor(Color.WHITE);} // Default
+        // Actual Cell
         canvas.drawRect((float) xPos, (float) yPos, (float) width, (float) height, paint);
+        paint.reset();
+
+        // Outline of Cell
+        paint.setColor(Color.BLACK);
+        canvas.drawRect((float) xPos, (float) yPos, (float) width + 2, (float) height + 2, paint);
+
+        paint.reset();
         // TODO: Draw the cell at its position depending on the state it is in
     }
 

@@ -5,6 +5,7 @@ import static com.usu.minesweeperstarter.Cell.Type.MINE;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -58,6 +59,7 @@ public class Game {
         //      5. Then you can use this arraylist like a queue when iterating of your grid
 
         // Setup a boolean array to randomly assign the types for the cells
+
         ArrayList<Boolean> values = new ArrayList<>(rows*cols);
         int totalTrue = 0;
         for (int i = 0; i < rows*cols; i++) {
@@ -74,17 +76,23 @@ public class Game {
 
 
         // For each value in the array create a new cell object with specified positions
-
+        double height = 0;
         for (int i = 0; i < cells.length; i++) {
+            double width = 0;
             for (int j = 0; j < cells[i].length; j++) {
                 Cell.Type type = EMPTY;
                 boolean value = values.remove(0);
                 if (value) {type = MINE;}
                 Log.d("The cell type is ", type.toString());
-                cells[i][j] = new Cell(i* cellWidth, j * cellHeight, cellWidth, cellHeight, type);
+                Log.d("Location is ", String.valueOf(width) + ", " + String.valueOf(height));
+                cells[i][j] = new Cell(width, height, cellWidth, cellHeight, type);
+                width += cellWidth;
             }
+            height += cellHeight;
         }
+        Log.d("All values have been added to the screen", "");
     }
+
 
 
 
@@ -114,6 +122,7 @@ public class Game {
     }
 
     public void handleLongPress(MotionEvent e) {
+
         // TODO: find the cell and toggle its mark
         //       then check to see if the player won the game
     }
@@ -126,10 +135,12 @@ public class Game {
                 paint.reset();
             }
         }
-
         if (state == State.WIN) {
-            // TODO: Some kind of a print object to get winner onto the screen
-//            draw(this,"WINNER!!!");
+//            int color = getResouces.getColor(R.color.primary);
+            int color = Color.BLUE;
+            paint.setColor(color);
+            paint.setTextSize(150);
+            canvas.drawText("You win!", screenWidth/ 4, screenHeight/ 3, paint);
         }
     }
 }

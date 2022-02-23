@@ -18,11 +18,6 @@ public class GameView extends View {
         super(context);
         this.gameMode = gameMode;
 
-        // TODO: Define a GestureDetectorCompat with an onSingleTapUp method
-        //      and and onLongPress method.
-        //      For each method, notify the game while action was performed with the motion Event.
-        //      Don't forget to call invalidate()
-
         GestureDetectorCompat detectorCompat = new GestureDetectorCompat(
                 context,
                 new GestureDetector.SimpleOnGestureListener() {
@@ -48,7 +43,6 @@ public class GameView extends View {
         );
 
         setOnTouchListener((view, e) -> {
-            // TODO: use your gesture detector here.
             return detectorCompat.onTouchEvent(e);
         });
     }
