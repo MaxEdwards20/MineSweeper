@@ -49,7 +49,7 @@ public class GameView extends View {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        game = new Game(gameMode, getWidth(), getHeight());
+        game = new Game(gameMode, getWidth(), getHeight(), getContext());
     }
 
     @Override

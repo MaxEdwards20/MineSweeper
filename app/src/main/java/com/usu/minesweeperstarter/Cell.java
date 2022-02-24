@@ -3,6 +3,7 @@ package com.usu.minesweeperstarter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 public class Cell {
 
@@ -62,27 +63,43 @@ public class Cell {
         this.numNeighbors = numNeighbors;
     }
 
+    public int getNumNeighbors(){return this.numNeighbors;}
+
     public void draw(Canvas canvas, Paint paint) {
 
 
-        if (isMarked) {paint.setColor(Color.RED);} // Marked
-        if (isSelected){
-            if (type == Type.NUMBER && numNeighbors < 2){paint.setColor(Color.GREEN);} // 1 Neighbor
-            else if (type == Type.NUMBER && numNeighbors < 3 ){paint.setColor(Color.MAGENTA);} // 2 neighbors
-            else if (type == Type.NUMBER ){paint.setColor(Color.BLUE);} // 3 neighbors
-            else if (type == Type.MINE){paint.setColor(Color.BLACK);} // Mine
-        }
-        else {paint.setColor(Color.WHITE);} // Default
-        // Actual Cell
-        canvas.drawRect((float) xPos, (float) yPos, (float) width, (float) height, paint);
-        paint.reset();
-
-        // Outline of Cell
+        // Outline of cell
         paint.setColor(Color.BLACK);
-        canvas.drawRect((float) xPos, (float) yPos, (float) width + 2, (float) height + 2, paint);
-
+        canvas.drawRect((float) xPos, (float) yPos, (float) (xPos + width), (float) (yPos + height), paint);
         paint.reset();
-        // TODO: Draw the cell at its position depending on the state it is in
+
+        // Inner Cell
+        paint.setColor(Color.GRAY);
+        canvas.drawRect((float) xPos, (float) yPos, (float) (xPos + width) - 1, (float) (yPos + height) -1 , paint);
+        paint.reset();
+
+        if (type == Type.MINE){Log.d("Mine is on the screen at ", String.valueOf(xPos) + ", " + String.valueOf(yPos));}
+
+        if (isMarked) {
+            paint.setColor(Color.RED);
+            canvas.drawRect((float) xPos, (float) yPos, (float) (xPos + width) - 1, (float) (yPos + height) -1 , paint);} // Marked
+        if (isSelected){
+            if (type == Type.EMPTY){
+                paint.setColor(Color.WHITE);
+                canvas.drawRect((float) xPos, (float) yPos, (float) (xPos + width) - 1, (float) (yPos + height) -1 , paint);
+            } // Mines
+            if (type == Type.MINE){
+                paint.setColor(Color.BLACK);
+                canvas.drawRect((float) xPos, (float) yPos, (float) (xPos + width) - 1, (float) (yPos + height) -1 , paint);
+            } // Neighors
+            if (type == Type.NUMBER){
+                paint.setTextSize(40);
+                paint.setColor(colors[numNeighbors]);
+                canvas.drawText(String.valueOf(numNeighbors),(float) (xPos + width/4), (float) (yPos + height - 10), paint);
+                paint.reset();
+            }
+
+        }
     }
 
     public Type getType() {
